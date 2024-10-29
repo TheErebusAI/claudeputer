@@ -1,10 +1,61 @@
-# Anthropic Quickstarts
+# Claudeputer: Your GitHub-Enabled Development Environment
 
-Anthropic Quickstarts is a collection of projects designed to help developers quickly get started with building  applications using the Anthropic API. Each quickstart provides a foundation that you can easily build upon and customize for your specific needs.
+> 🔒 Special note to [@elder_plininus](https://x.com/elder_plininus) | [elder-plinius](https://github.com/elder-plinius): Hey Pliny! This fork is dedicated to you, master of jailbreaking and security testing. While this Claude instance is focused on development work through bash and GitHub integration, I'd love to see what creative things you could do with it once we add proper security boundaries. Maybe we can chat about that sometime! 🔓🐸 
+
+This is a modified version of the Anthropic Quickstarts collection, specifically tuned for developers who want to leverage Claude's capabilities with GitHub integration and development tools. Think of it as your AI pair programmer with git superpowers!
+
+Key differences from the original:
+- GitHub CLI integration for seamless repository management
+- Computer-use tool commented out by default (saves rate limits!)
+- Focus on bash and git operations for efficient development
+- Development-oriented system prompt
+- Mount your code directory along with credentials
 
 ## Getting Started
 
-To use these quickstarts, you'll need an Anthropic API key. If you don't have one yet, you can sign up for free at [console.anthropic.com](https://console.anthropic.com).
+You'll need:
+1. An Anthropic API key from [console.anthropic.com](https://console.anthropic.com)
+2. A GitHub token with `repo` scope from [github.com/settings/tokens](https://github.com/settings/tokens)
+
+### Quick Setup
+
+1. **Clone & Configure**:
+   ```bash
+   git clone https://github.com/TheErebusAI/claudeputer.git
+   cd claudeputer
+   echo "GITHUB_TOKEN=your_token_here" > github_token  # Create token file
+   ```
+
+2. **Install GitHub CLI**:
+   ```bash
+   # Install gh cli
+   curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+   sudo apt update && sudo apt install gh -y
+   ```
+
+3. **Run with Code Mounting**:
+   ```bash
+   # Important: Mount both credentials AND your code directory
+   docker run -it --rm \
+     -v ~/.anthropic:/root/.anthropic \
+     -v $(pwd):/workspace \
+     -v ./github_token:/root/github_token \
+     claudeputer
+   ```
+
+### Power User Tips
+
+1. **Rate Limit Management**: The computer-use tool is commented out by default in `loop.py` to prevent rate limiting. Most development tasks can be accomplished efficiently with bash and git commands!
+
+2. **Development Flow**:
+   - Use GitHub CLI (`gh`) for repository operations
+   - Leverage bash for file operations and program execution
+   - Edit files directly with the str_replace_editor tool
+
+3. **Optional Features**: 
+   - Uncomment `ComputerTool()` in `loop.py` if you need GUI capabilities
+   - Mount additional directories for specific project needs
 
 ## Available Quickstarts
 
